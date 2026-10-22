@@ -1,8 +1,10 @@
 
 
+
 # Project Design & Implementation Document
 
-## Demo
+## Streamlit Community Link
+
 
 ## 1. Project Background & Motivation
 With recent events causing limiting our global energy sector, there is a strong emphasis on Renewable energy.
@@ -13,6 +15,8 @@ My aim was to develop a simple Streamlit system to handle predictions for anomal
 *   **Streamlit Frontend:** A Single Page Application built with `Streamlit`, allowing for CSV/Excel inputs or manual testing using sliders.
 *   **Model Management:** Caches the loaded data and model for continuous usage.
 *   **Classifier:** A class used to fit and evaluate all models (Isolation Forest, XGBoost Classifier, LGBM Classifier) simultaneously.
+
+<img width="3715" height="5292" alt="Architecture_Wind_Tubine" src="https://github.com/user-attachments/assets/b6ca8a4c-3da3-4e71-ae48-3f08608eff92" />
 
 ## 3. Tech Stack
 * Streamlit — Frontend + User Interaction
@@ -55,15 +59,33 @@ Though users can choose to switch between models.
 | particle_count has a strong negative-correlation with gearbox_oil_temp (r = -0.72) and gearbox_bearing_temp (r = -0.69) and a weak negative correlation to is_anomaly (-0.05) | The particle count metric contributes no unique information for the classifier.                                                                                                                                                                                            |
 | oil_pressure has a fairly strong negative correlation with is_anomaly (r = -0.57)                                                                                             | 	This correlation was seen being used heavily by the LGBMClassifier in its predictions, and only fairly used for the XGBClassifier.                                                                                                                                        |
 
+<img width="536" height="411" alt="image" src="https://github.com/user-attachments/assets/688a55c5-fe72-4705-9ee8-f86ea991d736" />
 
 The SCADA dataset had 97.1% cases being normal and only 2.1% being labeled as anomalies, showing high class imbalance.
+
+<img width="1189" height="495" alt="image" src="https://github.com/user-attachments/assets/ffa31af2-cbd7-4b31-9b91-8131bcbfdeb7" />
 
 The two most used features for these models are vibration_x and oil_pressure, as they provided the most information in classifying the gearbox states.
 
 XGBClassifier delegated its importance to the vibration_x metric alone holding (87% gain). While LightGBM split its importance
 among three metrics vibration_x, oil_pressure, and vibration_y which all resulted in a 90% gain.
 
+### Model Performances
+- Isolation Forest Performance
+<img width="501" height="192" alt="image" src="https://github.com/user-attachments/assets/db1d58da-1d2a-4de1-af10-304abb6cc178" />
+
+- LightGBM Classifier Performance
+<img width="487" height="191" alt="image" src="https://github.com/user-attachments/assets/72fb5f2f-c4df-4d5e-ac5f-3cda5cc74126" />
+
+- XGBoost Classifier Performance
+<img width="483" height="192" alt="image" src="https://github.com/user-attachments/assets/23e4ee76-ce81-4e74-b964-2408e936efa4" />
+
+
+<img width="1488" height="494" alt="image" src="https://github.com/user-attachments/assets/a67895c4-53c9-4a0d-b943-9977cff3f11e" />
+
 The Isolation Forest produced 23 False Positives and 24 False Negatives, whilst the other two models performed perfectly.
+
+<img width="1489" height="578" alt="image" src="https://github.com/user-attachments/assets/1fe1688e-1a5f-4c83-98f9-48678003135a" />
 
 Using a Precision Recall Curve, each model achieved an AP = 1.00 across all thresholds.
 
