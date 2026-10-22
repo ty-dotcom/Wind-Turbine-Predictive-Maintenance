@@ -70,6 +70,7 @@ def display_upload_classifier():
     file = st.file_uploader("Upload a CSV/Excel file", type=["csv", "tsv", "xlsx", "xls", "xlsm", "xlsb"])
 
     if file is None:
+        st.session_state.pop("predicted_df", None)
         return
 
     try:
@@ -92,43 +93,48 @@ def display_upload_classifier():
     dataframe = container.dataframe(df.head(100))
     if st.button("Predict"):
         df["prediction"] = make_prediction(df[COLUMNS])
-        anomaly_count = int(np.sum(df["prediction"] == "Warning!"))
-        normal_count = int(np.sum(df["prediction"] == "Healthy!"))
-        total = len(df)
-        container.subheader("Prediction Summary")
-        col1, col2, col3 = container.columns(3)
+        st.session_state["predicted_df"] = df.copy()
 
-        col1.metric("Total rows", total)
-        col2.metric("Anomalies found", anomaly_count)
-        col3.metric("Healthy rows", normal_count)
+    if "predicted_df" not in st.session_state:
+        return
+    df = st.session_state["predicted_df"]
+    anomaly_count = int(np.sum(df["prediction"] == "Warning!"))
+    normal_count = int(np.sum(df["prediction"] == "Healthy!"))
+    total = len(df)
+    container.subheader("Prediction Summary")
+    col1, col2, col3 = container.columns(3)
 
-        if total:
-            container.caption(
-                f"Anomaly rate: **{anomaly_count / total:.4f}%**"
-            )
+    col1.metric("Total rows", total)
+    col2.metric("Anomalies found", anomaly_count)
+    col3.metric("Healthy rows", normal_count)
 
-        container.divider()
-        show_anomalies = st.toggle(
-            "Show Anomalies",
-            value=True,
-            help="Toggle off to see all rows including anomalies."
+    if total:
+        container.caption(
+            f"Anomaly rate: **{anomaly_count / total:.4f}%**"
         )
 
-        if show_anomalies:
-            anomalies_df = df[df["prediction"] == "Warning!"]
-            if len(anomalies_df) == 0:
-                container.success(
-                    "No anomalies detected. Toggle off to see all rows.",
-                        icon=":material/check:")
-            else:
-                dataframe.dataframe(
-                    anomalies_df.style.map(prediction_color_map, subset=["prediction"])
-                )
+    container.divider()
+    show_anomalies = st.toggle(
+        "Show Anomalies",
+        value=True,
+        help="Toggle off to see all rows including anomalies."
+    )
+
+    if show_anomalies:
+        anomalies_df = df[df["prediction"] == "Warning!"]
+        if len(anomalies_df) == 0:
+            container.success(
+                "No anomalies detected. Toggle off to see all rows.",
+                    icon=":material/check:")
         else:
-            pd.set_option("styler.render.max_elements", 2102400)
             dataframe.dataframe(
-                df.style.map(prediction_color_map, subset=["prediction"])
+                anomalies_df.style.map(prediction_color_map, subset=["prediction"])
             )
+    else:
+        pd.set_option("styler.render.max_elements", 2102400)
+        dataframe.dataframe(
+            df.style.map(prediction_color_map, subset=["prediction"])
+        )
 
 def display_classifier():
     """Displays sliders for each sensor reading, handling the prediction once the button is pressed."""
