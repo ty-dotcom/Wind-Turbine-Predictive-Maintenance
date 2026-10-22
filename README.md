@@ -3,8 +3,13 @@
 
 # Project Design & Implementation Document
 
-## Streamlit Community Link
+## Demo
 
+https://github.com/user-attachments/assets/0633d077-252e-402d-b07a-fae0305056e4
+
+
+## Streamlit Community Link
+https://wind-turbine-predictive-maintenance.streamlit.app
 
 ## 1. Project Background & Motivation
 With recent events causing limiting our global energy sector, there is a strong emphasis on Renewable energy.
