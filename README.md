@@ -21,7 +21,8 @@ My aim was to develop a simple Streamlit system to handle predictions for anomal
 *   **Model Management:** Caches the loaded data and model for continuous usage.
 *   **Classifier:** A class used to fit and evaluate all models (Isolation Forest, XGBoost Classifier, LGBM Classifier) simultaneously.
 
-<img width="3715" height="5292" alt="Architecture_Wind_Tubine" src="https://github.com/user-attachments/assets/b6ca8a4c-3da3-4e71-ae48-3f08608eff92" />
+<img width="3715" height="2329" alt="Architecture_Wind_Tubine" src="https://github.com/user-attachments/assets/299c4b4d-32d2-4cfb-b44b-c9996abab549" />
+
 
 ## 3. Tech Stack
 * Streamlit — Frontend + User Interaction
