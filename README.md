@@ -34,13 +34,13 @@ My aim was to develop a simple Streamlit system to handle predictions for anomal
 ## 5. Model Evaluations
 
 ### Methodology
-*  **IsolationForest** — Unsupervised Model. Uses the dataset's anomaly rate as
+*  **IsolationForest** — Uses the dataset's anomaly rate as
   contamination. Since this model uses -1 and 1 for its classification I mapped its value to 1 and 0 respectively, wherein 1 is an anomaly and 0 is a normal state.
 
-*  **XGBClassifier** — Supervised Model. Trained on the labeled training split with
+*  **XGBClassifier** — Trained on the labeled training split with
   stratification.
 
-* **LGBMClassifier** — Supervised Model. Trained using 31 leaves and a learning rate of 0.01.
+* **LGBMClassifier** — Trained using 31 leaves and a learning rate of 0.01.
 
 Once each model is trained it is then evaluated on the test set using weighted
 precision, recall, and f1. The best model is selected based on the highest f1 score. 
