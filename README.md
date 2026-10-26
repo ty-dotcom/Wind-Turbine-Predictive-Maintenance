@@ -11,6 +11,9 @@ https://github.com/user-attachments/assets/0633d077-252e-402d-b07a-fae0305056e4
 ## Streamlit Community Link
 https://wind-turbine-predictive-maintenance.streamlit.app
 
+## Kaggle Dataset
+https://www.kaggle.com/datasets/aiwithcagri/wind-turbine-gearbox-anomaly-detection-5year-scada
+
 ## 1. Project Background & Motivation
 With recent events causing limiting our global energy sector, there is a strong emphasis on Renewable energy.
 My aim was to develop a simple Streamlit system to handle predictions for anomaly detections for the gearbox in Wind Turbines, using three different classification models and selecting the best model based on the highest f1 score. 
